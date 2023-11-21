@@ -4,14 +4,15 @@ const authController = require('../controllers/authController')
 const {vistaRegistro, vistaPrincipal} = require('../controllers/PageControllers')
 
 //router para las vistas
-router.get('/register', vistaRegistro, authController.isAuthenticated)
-router.get('/pacientes', vistaPrincipal, authController.isAuthenticated)
+router.get('/', authController.isAuthenticated, vistaPrincipal)
+router.get('/register', authController.isAuthenticated, vistaRegistro )
 
 
-router.get('/login', (req, res)=>{
-    res.render('login', {alert:false})
-})
 
+router.get('/login', (req, res) => {
+    const alert = req.query.error === 'incorrect';
+    res.render('authentication/login', { alert, layout: false });
+});
 
 
 //router para los métodos del controller

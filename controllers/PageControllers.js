@@ -1,12 +1,14 @@
-const vistaRegistro = (req,res)=>{
-res.render('register', {alert:false})
-}
 
-const vistaPrincipal = (req,res)=>{
-    res.render('pacientes', {alert:false})
-    }
+const vistaRegistro = (req, res) => {
+  res.render("authentication/register", { alert: false });
+};
 
-module.exports ={
-    vistaRegistro,
-    vistaPrincipal
-}
+const vistaPrincipal = (req, res) => {
+  res.render("pages/pacientes");
+};
+
+
+module.exports = {
+  vistaRegistro,
+  vistaPrincipal,
+};
