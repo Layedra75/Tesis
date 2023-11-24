@@ -87,7 +87,8 @@ exports.register = async (req, res) => {
                  alertIcon:'info',
                  showConfirmButton: true,
                  timer: false,
-                 ruta: 'login'
+                 ruta: 'login',
+                 layout: false
              })
          }else{
              conexion.query('SELECT * FROM users WHERE email = ?', [email], async (error, results)=>{
@@ -99,7 +100,8 @@ exports.register = async (req, res) => {
                          alertIcon:'error',
                          showConfirmButton: true,
                          timer: false,
-                         ruta: 'login'    
+                         ruta: 'login',
+                         layout: false    
                      })
                  }else{
                      //inicio de sesión    
@@ -119,7 +121,8 @@ exports.register = async (req, res) => {
                         alertIcon:'success',
                         showConfirmButton: false,
                          timer: 800,
-                        ruta: ''
+                        ruta: '',
+                        layout: false
                     })
                  }
              })
