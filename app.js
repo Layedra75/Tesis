@@ -4,8 +4,6 @@ const cookieParser = require('cookie-parser')
 const expressLayouts = require('express-ejs-layouts')
 const app = express()
 
-
-
 //seteamos el motor de plantillas
 app.set('view engine', 'ejs')
 app.use(expressLayouts)
