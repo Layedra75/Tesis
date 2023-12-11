@@ -1,1 +1,79 @@
-<h1>Hola mundo</h1>
+<!-- views/pages/usuarios.ejs -->
+
+<div class="card">
+    <div class="card-header">
+      <h1 class="card-title">Lista de Pacientes</h1>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table" id="usuariosTable">
+          <thead>
+            <tr>
+              <th scope="col">Cedula</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Apellido</th>
+              <th scope="col">Correo</th>
+              <th scope="col">Número</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% pacientes.forEach(pacientes => { %>
+            <tr>
+              <td><%= pacientes.cedula %></td>
+              <td><%= pacientes.nombre %></td>
+              <td><%= pacientes.apellido %></td>
+              <td><%= pacientes.correo %></td>
+              <td><%= pacientes.telefono %></td>
+              <td class="text-center">
+                  <div class="dropdown">
+                    <button class="btn btn-sm btn-transparent dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="fa-solid fa-ellipsis-vertical"></i>
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item"><i class="fa-regular fa-pen-to-square"></i> Editar</a></li>
+                      <li><a class="dropdown-item" onclick="confirmarEliminacion('<%= pacientes.cedula %>')"><i class="fa-regular fa-trash-can"></i> Eliminar</a></li>
+                    </ul>
+                  </div>
+                </td>
+            </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+      <script>
+        new DataTable("#usuariosTable");
+
+        function confirmarEliminacion(cedula) {
+          Swal.fire({
+            title: 'Eliminar',
+            text: '¿Estás seguro de que quieres eliminar este paciente?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Sí, eliminarlo'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = '/eliminar-paciente/' + cedula;
+            }
+          });
+        }
+      </script>
+    </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<% if(alert) { %>
+  <script>
+    Swal.fire({
+      title: '<%= alertTitle %>',
+      text:'<%= alertMessage %>',
+      icon:'<%= alertIcon %>',
+      showConfirmButton: <%= showConfirmButton %>,
+      timer: <%= timer %>
+    }).then(()=>{
+      window.location = '/<%= ruta %>'
+    })
+  </script>
+<% } %>
