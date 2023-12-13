@@ -27,6 +27,7 @@ router.get('/eliminar-paciente/:cedula', pacienteController.deletePatient);
 //router para el metodo de pacienteController
 router.post('/registerPatient', pacienteRegister.registerPatient)
 
+
 //router para los métodos del authController
 router.post('/register', authController.register)
 router.post('/login',authController.login)
