@@ -28,23 +28,77 @@
             <td><%= usuario.email %></td>
             <td><%= usuario.celular %></td>
             <td class="text-center">
-                <div class="dropdown">
-                  <button class="btn btn-sm btn-transparent dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item"><i class="fa-regular fa-pen-to-square"></i> Editar</a></li>
-                    <li><a class="dropdown-item"><i class="fa-regular fa-trash-can"></i> Eliminar</a></li>
+              <div class="dropdown">
+                <button
+                  class="btn btn-sm btn-transparent dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fa-solid fa-ellipsis-vertical"></i>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <!-- Enlace para abrir el modal de edición -->
+                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal<%= usuario.id %>">
+                      <i class="fa-regular fa-pen-to-square"></i> Editar
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      onclick="confirmarEliminacion('<%= usuario.id %>')"
+                      ><i class="fa-regular fa-trash-can"></i> Eliminar</a
+                    >
+                  </li>
                 </ul>
-                </div>
-              </td>
+              </div>
+            </td>
           </tr>
+
+          <!-- Modal de edición para este usuario -->
+          <%- include('editUser', { usuario: usuario }) %>
+
           <% }); %>
         </tbody>
       </table>
     </div>
+
+    <!-- Boton flotante para agregar nuevo paciente -->
+    <a href="/register" class="btn btn-primary fixed-button rounded-circle">
+      <i class="fas fa-plus"></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
       new DataTable("#usuariosTable");
+
+      function confirmarEliminacion(id) {
+        Swal.fire({
+          title: "Eliminar",
+          text: "¿Estás seguro de que quieres eliminar este usuario?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#d33",
+          cancelButtonColor: "#3085d6",
+          confirmButtonText: "Sí, eliminarlo",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            // Redirige a la página de eliminación
+            window.location.href = "/eliminar-usuario/" + id;
+          }
+        });
+      }
+      // Comprueba si hay un parámetro en la URL que indica éxito y muestra la notificación
+      const urlParams = new URLSearchParams(window.location.search);
+      const exitoParam = urlParams.get("exito");
+      if (exitoParam === "true") {
+        Swal.fire({
+          title: "Éxito",
+          text: "El usuario se ha eliminado con éxito",
+          icon: "success",
+        });
+      }
     </script>
   </div>
 </div>

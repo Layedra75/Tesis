@@ -3,8 +3,8 @@ const router = express.Router()
 const authController = require('../controllers/authController')
 const pacienteRegister = require('../controllers/pacienteRegister')
 const pacienteController = require('../controllers/pacienteController')
+const usuarioController = require('../controllers/UserController')
 const {vistaRegistro, vistaPrincipal, vistaUsuarios, registerPatient, vistaPacientes} = require('../controllers/PageControllers')
-
 
 //router para las vistas
 router.get('/', authController.isAuthenticated, vistaPrincipal)
@@ -19,9 +19,10 @@ router.get('/login', (req, res) => {
     res.render('authentication/login', { alert, layout: false });
 });
 
+//router para eliminar usuario (Trabajador)
+router.get('/eliminar-usuario/:id', usuarioController.eliminarUsuario);
 //router para eliminar paciente
 router.get('/eliminar-paciente/:cedula', pacienteController.deletePatient);
-
 
 //router para el metodo de pacienteController
 router.post('/registerPatient', pacienteRegister.registerPatient)

@@ -13,7 +13,7 @@ const registerPatient = (req, res) => {
 
 //Vista principal
 const vistaPrincipal = (req, res) => {
-  res.render("pages/dashboard");
+  res.render("pages/dashboard", { alert: false });
 };
 
 //Vista lista de pacientes
@@ -35,7 +35,7 @@ const vistaUsuarios = (req, res) => {
           console.error('Error al obtener la lista de usuarios:', error);
           res.status(500).send('Error al obtener la lista de usuarios');
       }else {
-        res.render('pages/usuarios', { usuarios });
+        res.render('pages/usuarios', { usuarios, alert: false });
       }
   });
 };

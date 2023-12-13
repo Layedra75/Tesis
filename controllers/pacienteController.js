@@ -1,5 +1,6 @@
 const conexion = require('../database/db');
 
+//Metodo para listar pacientes
 const obtenerListaPacientes = (callback) => {
     const sql = 'SELECT nombre, apellido, cedula, correo, telefono FROM Pacientes';
     conexion.query(sql, (error, results) => {
@@ -43,7 +44,7 @@ const deletePatient = async (req, res) => {
                             ruta: 'pacientes'
                         });
                     } else {
-                        res.redirect('/pacientes');
+                        res.redirect('/pacientes?exito=true');
                     }
                 });
             }
