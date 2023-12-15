@@ -61,5 +61,42 @@ const eliminarUsuario = async (req, res) => {
     }
 };
 
+// Método para editar usuarios
+const editarUsuario = (req, res) => {
+    try {
+        const { id } = req.params;
+        const { rol, cedula, nombre, apellido, correo, numero } = req.body;
 
-module.exports = { obtenerListaUsuarios, eliminarUsuario };
+        // Realizar la actualización del usuario en la base de datos
+        const sql = 'UPDATE users SET rol=?, cedula=?, name=?, lastname=?, email=?, celular=? WHERE id=?';
+        conexion.query(sql, [rol, cedula, nombre, apellido, correo, numero, id], (error, results) => {
+            if (error) {
+                res.render('pages/usuarios', {
+                    alert: true,
+                    alertTitle: "Error",
+                    alertMessage: "Error al editar al usuario",
+                    alertIcon: 'error',
+                    showConfirmButton: true,
+                    timer: false,
+                    ruta: 'usuarios'
+                });
+            } else {
+                // Después de la edición, redirige a la página de usuarios o a donde desees
+                res.redirect('/usuarios?exitoEdit=true');
+            }
+        });
+    } catch (error) {
+        res.render('pages/usuarios', {
+            alert: true,
+            alertTitle: "Error",
+            alertMessage: "Error en el servidor",
+            alertIcon: 'error',
+            showConfirmButton: true,
+            timer: false,
+            ruta: 'usuarios'
+        });
+    }
+};
+
+module.exports = { obtenerListaUsuarios, eliminarUsuario, editarUsuario };
+

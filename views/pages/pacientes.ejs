@@ -42,12 +42,12 @@
                   <i class="fa-solid fa-ellipsis-vertical"></i>
                 </button>
                 <ul class="dropdown-menu">
-                  <!-- Opcion para editar -->
-                  <li>
-                    <a class="dropdown-item"
-                      ><i class="fa-regular fa-pen-to-square"></i> Editar</a
-                    >
-                  </li>
+                  <!-- Enlace para abrir el modal -->
+            <li>
+              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editarPacienteModal<%= paciente.cedula %>">
+                <i class="fa-regular fa-pen-to-square"></i> Editar
+              </a>
+            </li>
                   <!-- Opcion para eliminar con confirmacion -->
                   <li>
                     <a
@@ -60,6 +60,8 @@
               </div>
             </td>
           </tr>
+          <!-- Modal de edición para este paciente -->
+    <%- include('editPatient', { paciente: paciente }) %>
           <% }); %>
         </tbody>
       </table>
@@ -97,14 +99,21 @@
       // Comprueba si hay un parametro en la URL que indica exito y muestra la notificación
       const urlParams = new URLSearchParams(window.location.search);
       const exitoParam = urlParams.get("exito");
+      const exitoEditParam = urlParams.get("exitoEdit");
+      
       if (exitoParam === "true") {
-        // Muestra la notificación de éxito
         Swal.fire({
           title: "Éxito",
           text: "El paciente se ha eliminado con éxito",
           icon: "success",
         });
-      }
+      } else if (exitoEditParam === "true") {
+        Swal.fire({
+          title: "Éxito",
+          text: "El paciente se ha modificado con éxito",
+          icon: "success",
+        });
+      }               
     </script>
   </div>
 </div>

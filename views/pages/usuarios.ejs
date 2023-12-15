@@ -92,13 +92,22 @@
       // Comprueba si hay un parámetro en la URL que indica éxito y muestra la notificación
       const urlParams = new URLSearchParams(window.location.search);
       const exitoParam = urlParams.get("exito");
-      if (exitoParam === "true") {
-        Swal.fire({
-          title: "Éxito",
-          text: "El usuario se ha eliminado con éxito",
-          icon: "success",
-        });
-      }
+const exitoEditParam = urlParams.get("exitoEdit");
+
+if (exitoParam === "true") {
+  Swal.fire({
+    title: "Éxito",
+    text: "El usuario se ha eliminado con éxito",
+    icon: "success",
+  });
+} else if (exitoEditParam === "true") {
+  Swal.fire({
+    title: "Éxito",
+    text: "El usuario se ha modificado con éxito",
+    icon: "success",
+  });
+}
+
     </script>
   </div>
 </div>

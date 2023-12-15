@@ -21,12 +21,17 @@ router.get('/login', (req, res) => {
 
 //router para eliminar usuario (Trabajador)
 router.get('/eliminar-usuario/:id', usuarioController.eliminarUsuario);
+// router para manejar la edicion de usuario
+router.post('/editar-usuario/:id', usuarioController.editarUsuario);
+
 //router para eliminar paciente
 router.get('/eliminar-paciente/:cedula', pacienteController.deletePatient);
+// router para manejar la edicion de usuario
+router.post('/editar-paciente/:cedula', pacienteController.editarPaciente);
+
 
 //router para el metodo de pacienteController
 router.post('/registerPatient', pacienteRegister.registerPatient)
-
 
 //router para los métodos del authController
 router.post('/register', authController.register)
