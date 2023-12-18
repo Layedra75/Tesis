@@ -25,9 +25,9 @@ router.get('/eliminar-usuario/:id', usuarioController.eliminarUsuario);
 router.post('/editar-usuario/:id', usuarioController.editarUsuario);
 
 //router para eliminar paciente
-router.get('/eliminar-paciente/:cedula', pacienteController.deletePatient);
+router.get('/eliminar-paciente/:id', pacienteController.deletePatient);
 // router para manejar la edicion de usuario
-router.post('/editar-paciente/:cedula', pacienteController.editarPaciente);
+router.post('/editar-paciente/:id', pacienteController.editarPaciente);
 
 
 //router para el metodo de pacienteController

@@ -43,16 +43,20 @@
                 </button>
                 <ul class="dropdown-menu">
                   <!-- Enlace para abrir el modal -->
-            <li>
-              <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editarPacienteModal<%= paciente.cedula %>">
-                <i class="fa-regular fa-pen-to-square"></i> Editar
-              </a>
-            </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editarPacienteModal<%= paciente.id %>"
+                    >
+                      <i class="fa-regular fa-pen-to-square"></i> Editar
+                    </a>
+                  </li>
                   <!-- Opcion para eliminar con confirmacion -->
                   <li>
                     <a
                       class="dropdown-item"
-                      onclick="confirmarEliminacion('<%= paciente.cedula %>')"
+                      onclick="confirmarEliminacion('<%= paciente.id %>')"
                       ><i class="fa-regular fa-trash-can"></i> Eliminar</a
                     >
                   </li>
@@ -61,8 +65,7 @@
             </td>
           </tr>
           <!-- Modal de edición para este paciente -->
-    <%- include('editPatient', { paciente: paciente }) %>
-          <% }); %>
+          <%- include('editPatient', { paciente: paciente }) %> <% }); %>
         </tbody>
       </table>
     </div>
@@ -79,7 +82,7 @@
       new DataTable("#usuariosTable");
 
       // Funcion para confirmar la eliminacion de un paciente
-      function confirmarEliminacion(cedula) {
+      function confirmarEliminacion(id) {
         Swal.fire({
           title: "Eliminar",
           text: "¿Estás seguro de que quieres eliminar este paciente?",
@@ -91,7 +94,7 @@
         }).then((result) => {
           if (result.isConfirmed) {
             // Redirige a la pagina de eliminacion con la cedula del paciente
-            window.location.href = "/eliminar-paciente/" + cedula;
+            window.location.href = "/eliminar-paciente/" + id;
           }
         });
       }
@@ -100,20 +103,28 @@
       const urlParams = new URLSearchParams(window.location.search);
       const exitoParam = urlParams.get("exito");
       const exitoEditParam = urlParams.get("exitoEdit");
-      
+
       if (exitoParam === "true") {
         Swal.fire({
           title: "Éxito",
           text: "El paciente se ha eliminado con éxito",
           icon: "success",
+        }).then(() => {
+          // Elimina el parámetro de éxito de la URL y recarga la página
+          history.replaceState({}, document.title, window.location.pathname);
+          location.reload();
         });
       } else if (exitoEditParam === "true") {
         Swal.fire({
           title: "Éxito",
           text: "El paciente se ha modificado con éxito",
           icon: "success",
+        }).then(() => {
+          // Elimina el parámetro de éxitoEdit de la URL y recarga la página
+          history.replaceState({}, document.title, window.location.pathname);
+          location.reload();
         });
-      }               
+      }
     </script>
   </div>
 </div>

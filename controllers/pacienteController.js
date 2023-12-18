@@ -2,7 +2,7 @@ const conexion = require('../database/db');
 
 //Metodo para listar pacientes
 const obtenerListaPacientes = (callback) => {
-    const sql = 'SELECT nombre, apellido, cedula, correo, telefono FROM Pacientes';
+    const sql = 'SELECT id, nombre, apellido, cedula, correo, telefono FROM Pacientes';
     conexion.query(sql, (error, results) => {
         if (error) {
             console.error('Error al obtener la lista de pacientes:', error);
@@ -16,10 +16,10 @@ const obtenerListaPacientes = (callback) => {
 //Metodo para eliminar pacientes
 const deletePatient = async (req, res) => {
     try {
-        const { cedula } = req.params;
+        const { id } = req.params;
 
         // Realizar la eliminación del paciente
-        conexion.query('DELETE FROM Pacientes WHERE cedula = ?', [cedula], (error, results) => {
+        conexion.query('DELETE FROM Pacientes WHERE id = ?', [id], (error, results) => {
             if (error) {
                 res.render('pages/pacientes', {
                     alert: true,
@@ -62,15 +62,16 @@ const deletePatient = async (req, res) => {
     }
 };
 
+//Metodo para editar pacientes
 const editarPaciente = async (req, res) => {
     try {
-        const { cedula } = req.params;
-        const { nombre, apellido, correo, telefono } = req.body;
+        const { id } = req.params;
+        const { cedula, nombre, apellido, correo, telefono } = req.body;
 
         // Realizar la actualización del paciente
         conexion.query(
-            'UPDATE Pacientes SET nombre = ?, apellido = ?, correo = ?, telefono = ? WHERE cedula = ?',
-            [nombre, apellido, correo, telefono, cedula],
+            'UPDATE Pacientes SET nombre = ?, apellido = ?, cedula = ?, correo = ?, telefono = ? WHERE id = ?',
+            [nombre, apellido, cedula, correo, telefono, id],
             (error, results) => {
                 if (error) {
                     res.render('pages/pacientes', {

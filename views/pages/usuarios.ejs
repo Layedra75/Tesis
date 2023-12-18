@@ -40,7 +40,11 @@
                 <ul class="dropdown-menu">
                   <li>
                     <!-- Enlace para abrir el modal de edición -->
-                    <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#editarUsuarioModal<%= usuario.id %>">
+                    <a
+                      class="dropdown-item"
+                      data-bs-toggle="modal"
+                      data-bs-target="#editarUsuarioModal<%= usuario.id %>"
+                    >
                       <i class="fa-regular fa-pen-to-square"></i> Editar
                     </a>
                   </li>
@@ -57,9 +61,7 @@
           </tr>
 
           <!-- Modal de edición para este usuario -->
-          <%- include('editUser', { usuario: usuario }) %>
-
-          <% }); %>
+          <%- include('editUser', { usuario: usuario }) %> <% }); %>
         </tbody>
       </table>
     </div>
@@ -90,24 +92,32 @@
         });
       }
       // Comprueba si hay un parámetro en la URL que indica éxito y muestra la notificación
+      // Comprueba si hay un parámetro en la URL que indica éxito y muestra la notificación
       const urlParams = new URLSearchParams(window.location.search);
       const exitoParam = urlParams.get("exito");
-const exitoEditParam = urlParams.get("exitoEdit");
+      const exitoEditParam = urlParams.get("exitoEdit");
 
-if (exitoParam === "true") {
-  Swal.fire({
-    title: "Éxito",
-    text: "El usuario se ha eliminado con éxito",
-    icon: "success",
-  });
-} else if (exitoEditParam === "true") {
-  Swal.fire({
-    title: "Éxito",
-    text: "El usuario se ha modificado con éxito",
-    icon: "success",
-  });
-}
-
+      if (exitoParam === "true") {
+        Swal.fire({
+          title: "Éxito",
+          text: "El usuario se ha eliminado con éxito",
+          icon: "success",
+        }).then(() => {
+          // Elimina el parámetro de éxito de la URL y recarga la página
+          history.replaceState({}, document.title, window.location.pathname);
+          location.reload();
+        });
+      } else if (exitoEditParam === "true") {
+        Swal.fire({
+          title: "Éxito",
+          text: "El usuario se ha modificado con éxito",
+          icon: "success",
+        }).then(() => {
+          // Elimina el parámetro de éxitoEdit de la URL y recarga la página
+          history.replaceState({}, document.title, window.location.pathname);
+          location.reload();
+        });
+      }
     </script>
   </div>
 </div>
