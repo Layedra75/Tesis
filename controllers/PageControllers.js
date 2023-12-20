@@ -16,6 +16,10 @@ const vistaPrincipal = (req, res) => {
   res.render("pages/dashboard", { alert: false });
 };
 
+const citasMedicas = (req, res) => {
+  res.render("pages/citas", { alert: false });
+};
+
 //Vista lista de pacientes
 const vistaPacientes = (req, res) => {
   pacienteController.obtenerListaPacientes((error, pacientes) => {
@@ -45,5 +49,6 @@ module.exports = {
   vistaPrincipal,
   vistaPacientes,
   vistaUsuarios,
-  registerPatient
+  registerPatient,
+  citasMedicas
 };

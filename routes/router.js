@@ -4,7 +4,7 @@ const authController = require('../controllers/authController')
 const pacienteRegister = require('../controllers/pacienteRegister')
 const pacienteController = require('../controllers/pacienteController')
 const usuarioController = require('../controllers/UserController')
-const {vistaRegistro, vistaPrincipal, vistaUsuarios, registerPatient, vistaPacientes} = require('../controllers/PageControllers')
+const {vistaRegistro, vistaPrincipal, vistaUsuarios, registerPatient, vistaPacientes, citasMedicas} = require('../controllers/PageControllers')
 
 //router para las vistas
 router.get('/', authController.isAuthenticated, vistaPrincipal)
@@ -12,6 +12,8 @@ router.get('/pacientes', authController.isAuthenticated, vistaPacientes)
 router.get('/register', authController.isAuthenticated, vistaRegistro )
 router.get('/usuarios', authController.isAuthenticated, vistaUsuarios)
 router.get('/registerPatient', authController.isAuthenticated, registerPatient)
+
+router.get('/citas', authController.isAuthenticated, citasMedicas)
 
 //router para login
 router.get('/login', (req, res) => {
