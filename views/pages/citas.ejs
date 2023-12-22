@@ -1,9 +1,11 @@
+<!-- citas.ejs -->
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
       timeZone: 'local',
       locale: 'es',
+      selectable: true,
       initialView: 'dayGridMonth',
       headerToolbar: {
         left: 'prev,next today',
@@ -16,17 +18,30 @@
         week: 'Semana',
         day: 'Día'
       },
-      dateClick: function(info) {
-        // Abre el modal utilizando Bootstrap y pasa la fecha del día clickeado
+      select: function(data) {
+        // Abre el modal y pasa la fecha y hora del día clickeado
+        $('#event-time').val('');
         $('#myModal').modal('show');
-        $('#event-date').text('Fecha: ' + info.date.toLocaleDateString());
-      },
-      eventClick: function(info) {
-        // Abre el modal utilizando Bootstrap y pasa la fecha del evento
-        $('#myModal').modal('show');
-        $('#event-date').text('Fecha: ' + info.event.start.toLocaleDateString());
-      },
+      
+        var startDate = new Date(data.start);
+        var timeZoneOffset = startDate.getTimezoneOffset();
+      
+        startDate.setMinutes(startDate.getMinutes() - timeZoneOffset);
+      
+        var formattedDate = startDate.toISOString().slice(0, 10); 
+        $('#event-date').val(formattedDate);
+        $('#event-time').val(startDate.toISOString().slice(11, 16));
+      }
+      
     });
+
+    // Configurar el manejo del cambio de fecha y hora en el formulario
+    $('#myModal').on('show.bs.modal', function(event) {
+      var modal = $(this);
+      var currentDate = $('#event-date').val();
+      modal.find('#event-time').val(currentDate + 'T' + modal.find('#event-time').val());
+    });
+
     calendar.render();
   });
 </script>
