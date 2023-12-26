@@ -9,8 +9,8 @@
                 <label for="rol" class="form-label d-flex justify-content-between align-items-center">
                     <span>Rol</span>
                 </label>
-                <select id="rol" name="rol" class="select form-select" style="width: 50%">
-                    <option value="admin">Admin</option>
+                <select id="rol" name="rol" class="form-control selectize" style="width: 25%">
+                    <option value="admin">Administrador</option>
                     <option value="doctor">Doctor</option>
                 </select>
             </div>
@@ -62,3 +62,9 @@
 
 <%- include('../partials/validacion.ejs') %>
 
+<script>
+    $(document).ready(function() {
+      // Inicializa Selectize para el campo de rol
+      $('#rol').selectize();
+    });
+  </script>

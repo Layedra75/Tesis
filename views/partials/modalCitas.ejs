@@ -1,43 +1,79 @@
 <!-- Modal Creacion de Citas Medicas-->
-<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Crear Cita Médica</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <!-- Formulario para crear cita médica -->
-          <form>
-            <div class="mb-3">
-              <label for="event-date" class="form-label">Fecha:</label>
-          <input type="date" class="form-control" id="event-date" />
-            </div>
-            <div class="mb-3">
-              <label for="event-time" class="form-label">Hora:</label>
-              <input type="time" class="form-control" id="event-time"/>
-            </div>
-            <div class="mb-3">
-              <label for="patient" class="form-label">Paciente:</label>
-              <input type="text" class="form-control" id="patient" placeholder="Nombre del paciente" />
-            </div>
-            <div class="mb-3">
-              <label for="doctor" class="form-label">Médico:</label>
-              <input type="text" class="form-control" id="doctor" placeholder="Nombre del médico" />
-            </div>
-            <div class="mb-3">
-              <label for="description" class="form-label">Descripción:</label>
-              <textarea class="form-control" id="description" rows="3" placeholder="Descripción opcional"></textarea>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-            Cancelar
-          </button>
-          <button type="submit" class="btn btn-primary">Guardar cita</button>
-        </div>
+<div
+  class="modal fade"
+  id="myModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Crear Cita Médica</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- Formulario para crear cita médica -->
+        <form>
+          <div class="mb-3">
+            <label for="event-date" class="form-label">Fecha:</label>
+            <input type="date" class="form-control" id="event-date" />
+          </div>
+          <div class="mb-3">
+            <label for="event-time" class="form-label">Hora:</label>
+            <input type="time" class="form-control" id="event-time" />
+          </div>
+
+          <div class="mb-3">
+            <label for="patient" class="form-label">Paciente:</label>
+            <select id="patient" required>
+              <% pacientes.forEach(function(paciente) { %>
+              <option value="<%= paciente.id %>"><%= paciente.nombre %></option>
+              <% }); %>
+            </select>
+          </div>
+          
+          <div class="mb-3">
+            <label for="doctor" class="form-label">Médico:</label>
+            <select id="doctor" required>
+              <% doctores.forEach(function(doctores) { %>
+              <option value="<%= doctores.id %>"><%= doctores.name %></option>
+              <% }); %>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="description" class="form-label">Descripción:</label>
+            <textarea
+              class="form-control"
+              id="description"
+              rows="3"
+              placeholder="Descripción opcional"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary">Guardar cita</button>
       </div>
     </div>
   </div>
-  
+</div>
+
+<script>
+  $(document).ready(function() {
+    // Inicializa Selectize para el campo de paciente
+    $('#patient').selectize();
+
+    // Inicializa Selectize para el campo de médico
+    $('#doctor').selectize();
+  });
+</script>

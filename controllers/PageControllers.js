@@ -17,8 +17,26 @@ const vistaPrincipal = (req, res) => {
 };
 
 const citasMedicas = (req, res) => {
-  res.render("pages/citas", { alert: false });
+  pacienteController.obtenerListaPacientes((errorPacientes, pacientes) => {
+    if (errorPacientes) {
+      console.error('Error al obtener la lista de pacientes:', errorPacientes);
+      res.status(500).send('Error al obtener la lista de pacientes');
+    } else {
+      usuarioController.obtenerListaUsuarios((errorUsuarios, usuarios) => {
+        if (errorUsuarios) {
+          console.error('Error al obtener la lista de usuarios:', errorUsuarios);
+          res.status(500).send('Error al obtener la lista de usuarios');
+        } else {
+          // Filtrar solo los usuarios con rol "doctor"
+          const doctores = usuarios.filter(usuario => usuario.rol === 'doctor');
+          
+          res.render('pages/citas', { pacientes, doctores, alert: false });
+        }
+      });
+    }
+  });
 };
+
 
 //Vista lista de pacientes
 const vistaPacientes = (req, res) => {
