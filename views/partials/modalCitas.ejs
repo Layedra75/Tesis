@@ -18,35 +18,43 @@
         ></button>
       </div>
       <div class="modal-body">
+        
         <!-- Formulario para crear cita médica -->
-        <form>
-          <div class="mb-3">
-            <label for="event-date" class="form-label">Fecha:</label>
-            <input type="date" class="form-control" id="event-date" />
-          </div>
-          <div class="mb-3">
-            <label for="event-time" class="form-label">Hora:</label>
-            <input type="time" class="form-control" id="event-time" />
+        <form id="citaForm">
+          
+          <!-- Fecha y Hora -->
+          <div class="row">
+            <div class="col-6 mb-3">
+              <label for="event-date" class="form-label">Fecha:</label>
+              <input type="date" class="form-control" id="event-date" />
+            </div>
+            <div class="col-6 mb-3">
+              <label for="event-time" class="form-label">Hora:</label>
+              <input type="time" class="form-control" id="event-time" />
+            </div>
           </div>
 
+          <!-- Paciente -->
           <div class="mb-3">
             <label for="patient" class="form-label">Paciente:</label>
             <select id="patient" required>
               <% pacientes.forEach(function(paciente) { %>
-              <option value="<%= paciente.id %>"><%= paciente.nombre %></option>
-              <% }); %>
-            </select>
-          </div>
-          
-          <div class="mb-3">
-            <label for="doctor" class="form-label">Médico:</label>
-            <select id="doctor" required>
-              <% doctores.forEach(function(doctores) { %>
-              <option value="<%= doctores.id %>"><%= doctores.name %></option>
-              <% }); %>
+                <option value="<%= paciente.id %>"><%= paciente.nombre + ' ' + paciente.apellido %></option>
+                <% }); %>
             </select>
           </div>
 
+          <!-- Medico -->
+          <div class="mb-3">
+            <label for="doctor" class="form-label">Médico:</label>
+            <select id="doctor" required>
+              <% doctores.forEach(function(doctor) { %>
+                <option value="<%= doctor.id %>"><%= doctor.name + ' ' + doctor.lastname %></option>
+                <% }); %>
+            </select>
+          </div>
+
+          <!-- Descripción -->
           <div class="mb-3">
             <label for="description" class="form-label">Descripción:</label>
             <textarea
@@ -58,6 +66,8 @@
           </div>
         </form>
       </div>
+
+      <!-- Botones -->
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
           Cancelar
@@ -68,12 +78,21 @@
   </div>
 </div>
 
+<!-- Inicializa el Selectize -->
 <script>
-  $(document).ready(function() {
-    // Inicializa Selectize para el campo de paciente
-    $('#patient').selectize();
+  $(document).ready(function () {
+    $('#patient').selectize({
+      valueField: 'id', // Campo que representa el valor único del elemento
+      labelField: ['nombre', 'apellido'],//Campos que se mostraran en el select
+      searchField: ['nombre', 'apellido', 'cedula'], // Campos en los que se realizará la búsqueda
+      options: [<% pacientes.forEach(function(paciente) { %> 
+        { id: '<%= paciente.id %>', nombre: '<%= paciente.nombre %>', apellido: '<%= paciente.apellido %>', cedula: '<%= paciente.cedula %>' },
+      <% }); %>],
+      create: false
+    });
 
-    // Inicializa Selectize para el campo de médico
-    $('#doctor').selectize();
+    $("#doctor").selectize();
   });
+  
 </script>
+

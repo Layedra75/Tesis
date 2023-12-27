@@ -4,6 +4,7 @@ const authController = require('../controllers/authController')
 const pacienteRegister = require('../controllers/pacienteRegister')
 const pacienteController = require('../controllers/pacienteController')
 const usuarioController = require('../controllers/UserController')
+const citasController = require('../controllers/citasController');
 const {vistaRegistro, vistaPrincipal, vistaUsuarios, registerPatient, vistaPacientes, citasMedicas} = require('../controllers/PageControllers')
 
 //router para las vistas
@@ -20,6 +21,9 @@ router.get('/login', (req, res) => {
     const alert = req.query.error === 'incorrect';
     res.render('authentication/login', { alert, layout: false });
 });
+
+// Ruta para guardar una nueva cita médica
+router.post('/guardar-cita', citasController.guardarCita);
 
 //router para eliminar usuario (Trabajador)
 router.get('/eliminar-usuario/:id', usuarioController.eliminarUsuario);

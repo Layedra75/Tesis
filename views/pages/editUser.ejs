@@ -1,6 +1,7 @@
 <!-- views/editUser.ejs -->
 
-<div class="modal fade" id="editarUsuarioModal<%= usuario.id %>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editarUsuarioModal<%= usuario.id %>" tabindex="-1" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -14,7 +15,10 @@
           <!-- Rol -->
           <div class="mb-3">
             <label for="rol" class="form-label">Rol:</label>
-            <input type="text" class="form-control" id="rol" name="rol" value="<%= usuario.rol %>" required>
+            <div class="input-group">
+              <span class="input-group-text bg-white"><i class="fas fa-user-shield"></i></span>
+              <input type="text" class="form-control" id="rol" name="rol" value="<%= usuario.rol %>" readonly>
+            </div>
           </div>
 
           <!-- Cédula -->
@@ -32,7 +36,8 @@
           <!-- Apellido -->
           <div class="mb-3">
             <label for="apellido" class="form-label">Apellido:</label>
-            <input type="text" class="form-control" id="apellido" name="apellido" value="<%= usuario.lastname %>" required>
+            <input type="text" class="form-control" id="apellido" name="apellido" value="<%= usuario.lastname %>"
+              required>
           </div>
 
           <!-- Correo -->

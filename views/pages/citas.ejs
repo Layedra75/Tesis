@@ -6,6 +6,10 @@
       timeZone: 'local',
       locale: 'es',
       selectable: true,
+      editable: true,
+      slotMinTime:'08:00:00',
+      slotMaxTime:'18:00:00',
+      hiddenDays:[0,6],
       initialView: 'dayGridMonth',
       headerToolbar: {
         left: 'prev,next today',
@@ -44,6 +48,7 @@
 
     calendar.render();
   });
+
 </script>
 
 <div class="container mt-4">

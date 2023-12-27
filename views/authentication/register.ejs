@@ -1,70 +1,132 @@
 <title>Registro</title>
 
 <div class="card">
-    <div class="card-header"><h1 style="font-size: 18px;">Registro</h1></div>
-    <div class="card-body text-bd-primary">
-        <form action="/register" method="POST" id="formRegister">
+  <div class="card-header"><h1 style="font-size: 18px">Registro</h1></div>
+  <div class="card-body text-bd-primary">
+    <form action="/register" method="POST" id="formRegister">
+      <div class="mb-3">
+        <label
+          for="rol"
+          class="form-label d-flex justify-content-between align-items-center"
+        >
+          <span>Rol</span>
+        </label>
+        <select
+          id="rol"
+          name="rol"
+          class="form-control selectize"
+          style="width: 25%"
+        >
+          <option value="admin">Administrador</option>
+          <option value="doctor">Doctor</option>
+        </select>
+      </div>
 
-            <div class="mb-3">
-                <label for="rol" class="form-label d-flex justify-content-between align-items-center">
-                    <span>Rol</span>
-                </label>
-                <select id="rol" name="rol" class="form-control selectize" style="width: 25%">
-                    <option value="admin">Administrador</option>
-                    <option value="doctor">Doctor</option>
-                </select>
-            </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Nombre completo</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          class="form-control"
+          aria-describedby="emailHelp"
+          required
+          maxlength="55"
+        />
+      </div>
 
-            <div class="mb-3">
-                <label for="name" class="form-label">Nombre completo</label>
-                <input id="name" name="name" type="text" class="form-control" aria-describedby="emailHelp" required maxlength="55">
-            </div>
+      <div class="mb-3">
+        <label for="lastname" class="form-label">Apellido</label>
+        <input
+          id="lastname"
+          name="lastname"
+          type="text"
+          class="form-control"
+          required
+          maxlength="55"
+        />
+      </div>
 
-            <div class="mb-3">
-                <label for="lastname" class="form-label">Apellido</label>
-                <input id="lastname" name="lastname" type="text" class="form-control" required maxlength="55">
-            </div>
+      <div class="mb-3">
+        <label for="cedula" class="form-label">Cédula</label>
+        <input
+          id="cedula"
+          name="cedula"
+          type="text"
+          class="form-control"
+          maxlength="15"
+          minlength="7"
+          title="La cédula debe contener al menos 7 dígitos"
+          oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+          required
+        />
+      </div>
 
-            <div class="mb-3">
-                <label for="cedula" class="form-label">Cédula</label>
-                <input id="cedula" name="cedula" type="text" class="form-control" maxlength="15" minlength="7" title="La cédula debe contener al menos 7 dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
-            </div>
+      <div class="mb-3">
+        <label for="date" class="form-label">Fecha de Nacimiento</label>
+        <input
+          id="date"
+          name="date"
+          type="date"
+          class="form-control"
+          required
+        />
+        <p id="ageError" class="text-danger"></p>
+      </div>
 
-            <div class="mb-3">
-                <label for="date" class="form-label">Fecha de Nacimiento</label>
-                <input id="date" name="date" type="date" class="form-control" required>
-                <p id="ageError" class="text-danger"></p>
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          class="form-control"
+          maxlength="150"
+          required
+        />
+        <p id="emailError" class="text-danger"></p>
+      </div>
 
-            </div>
+      <div class="mb-3">
+        <label for="celular" class="form-label">Celular</label>
+        <input
+          id="celular"
+          name="celular"
+          type="text"
+          class="form-control"
+          maxlength="15"
+          minlength="10"
+          title="El número de celular debe contener al menos 10 dígitos"
+          oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+          required
+        />
+      </div>
 
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input id="email" name="email" type="email" class="form-control" maxlength="150" required>
-                <p id="emailError" class="text-danger"></p>
-            </div>
-
-            <div class="mb-3">
-                <label for="celular" class="form-label">Celular</label>
-                <input id="celular" name="celular" type="text" class="form-control" maxlength="15" minlength="10" title="El número de celular debe contener al menos 10 dígitos" oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
-            </div>
-
-            <div class="form-group">
-                <label for="pass" class="form-label">Contraseña</label>
-                <input id="pass" name="pass" type="password" class="form-control" required>
-            </div>
-        </form>
-    </div>
-    <div class="card-footer">
-        <a href="/usuarios" type="button" class="btn btn-danger">Cancelar</a>
-        <button form="formRegister" type="submit" class="btn btn-primary">Registrar</button>
-    </div>
+      <div class="form-group">
+        <label for="pass" class="form-label">Contraseña</label>
+        <input
+          id="pass"
+          name="pass"
+          type="password"
+          class="form-control"
+          required
+        />
+      </div>
+    </form>
+  </div>
+  <div class="card-footer">
+    <a href="/usuarios" type="button" class="btn btn-danger">Cancelar</a>
+    <button form="formRegister" type="submit" class="btn btn-primary">
+      Registrar
+    </button>
+  </div>
 </div>
 
 <%- include('../partials/validacion.ejs') %>
 
+<!-- Inicializa el Selectize -->
 <script>
-    $(document).ready(function() {
-      // Inicializa Selectize para el campo de rol
-      $('#rol').selectize();
-    });
-  </script>
+  $(document).ready(function () {
+    $("#rol").selectize();
+  });
+</script>
