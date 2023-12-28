@@ -1,54 +1,121 @@
 <!-- citas.ejs -->
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
+  document.addEventListener("DOMContentLoaded", function () {
+    var calendarEl = document.getElementById("calendar");
     var calendar = new FullCalendar.Calendar(calendarEl, {
-      timeZone: 'local',
-      locale: 'es',
+      timeZone: "local",
+      locale: "es",
       selectable: true,
       editable: true,
-      slotMinTime:'08:00:00',
-      slotMaxTime:'18:00:00',
-      hiddenDays:[0,6],
-      initialView: 'dayGridMonth',
+      slotMinTime: "08:00:00",
+      slotMaxTime: "18:00:00",
+      hiddenDays: [0, 6],
+      initialView: "dayGridMonth",
       headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay",
       },
       buttonText: {
-        today: 'Hoy',
-        month: 'Mes',
-        week: 'Semana',
-        day: 'Día'
+        today: "Hoy",
+        month: "Mes",
+        week: "Semana",
+        day: "Día",
       },
-      select: function(data) {
+      select: function (data) {
         // Abre el modal y pasa la fecha y hora del día clickeado
-        $('#event-time').val('');
-        $('#myModal').modal('show');
-      
+        $("#event-time").val("");
+        $("#myModal").modal("show");
+
         var startDate = new Date(data.start);
         var timeZoneOffset = startDate.getTimezoneOffset();
-      
+
         startDate.setMinutes(startDate.getMinutes() - timeZoneOffset);
-      
-        var formattedDate = startDate.toISOString().slice(0, 10); 
-        $('#event-date').val(formattedDate);
-        $('#event-time').val(startDate.toISOString().slice(11, 16));
-      }
-      
+
+        var formattedDate = startDate.toISOString().slice(0, 10);
+        $("#event-date").val(formattedDate);
+        $("#event-time").val(startDate.toISOString().slice(11, 16));
+      },
     });
 
     // Configurar el manejo del cambio de fecha y hora en el formulario
-    $('#myModal').on('show.bs.modal', function(event) {
+    $("#myModal").on("show.bs.modal", function (event) {
       var modal = $(this);
-      var currentDate = $('#event-date').val();
-      modal.find('#event-time').val(currentDate + 'T' + modal.find('#event-time').val());
+      var currentDate = $("#event-date").val();
+      modal
+        .find("#event-time")
+        .val(currentDate + "T" + modal.find("#event-time").val());
+    });
+
+    // Manejar el envío del formulario
+$("#myModal").on("click", "#guardar-cita", function (e) {
+  e.preventDefault();
+
+  // Capturar los valores del formulario
+  var fecha = $("#event-date").val();
+  var hora = $("#event-time").val();
+  var pacienteId = $("#patient").val();
+  var doctorId = $("#doctor").val();
+  var descripcion = $("#description").val();
+
+  // Obtener el nombre y apellido del paciente
+  var pacienteSelectize = $("#patient")[0].selectize;
+  var pacienteOption = pacienteSelectize.options[pacienteId];
+
+  // Verificar que la opción del paciente está definida y tiene las propiedades 'nombre' y 'apellido'
+  var pacienteNombre = pacienteOption && pacienteOption.nombre ? pacienteOption.nombre : "";
+  var pacienteApellido = pacienteOption && pacienteOption.apellido ? pacienteOption.apellido : "";
+
+// Obtener el nombre y apellido del médico
+var doctorSelectize = $("#doctor")[0].selectize;
+var doctorOption = doctorSelectize.options[doctorId];
+
+// Verificar que la opción del médico está definida y tiene las propiedades 'name' y 'lastname'
+var doctorNombre = doctorOption && doctorOption.name ? doctorOption.name : "";
+var doctorApellido = doctorOption && doctorOption.lastname ? doctorOption.lastname : "";
+
+
+  // Crear un nuevo evento con propiedades extendidas
+  var newEvent = {
+    title: "Cita con " + pacienteNombre + " " + pacienteApellido,
+    start: fecha + "T" + hora,
+    pacienteId: pacienteId,
+    doctorId: doctorId,
+    descripcion: descripcion,
+    extendedProps: {
+      pacienteNombre: pacienteNombre + " " + pacienteApellido,
+      doctorNombre: doctorNombre + " " + doctorApellido,
+      descripcion: descripcion,
+    },
+  };
+
+  // Agregar el evento al calendario
+  calendar.addEvent(newEvent);
+
+  // Cerrar el modal
+  $("#myModal").modal("hide");
+});
+
+    // Configurar un tooltip para mostrar la descripción completa al pasar el ratón sobre el evento
+    calendar.setOption("eventDidMount", function (info) {
+      var pacienteNombre = info.event.extendedProps.pacienteNombre;
+      var doctorNombre = info.event.extendedProps.doctorNombre;
+      var descripcion = info.event.extendedProps.descripcion;
+
+      var tooltipContent = "Paciente: " + pacienteNombre + "<br>Medico: " + doctorNombre + "<br>Motivo: " + descripcion;
+
+      $(info.el).attr("data-toggle", "tooltip");
+      $(info.el).attr("title", tooltipContent);
+      $(info.el).tooltip({
+        html: true,
+        placement: "top",
+        trigger: "hover",
+        container: "body",
+      });
     });
 
     calendar.render();
   });
-
 </script>
 
 <div class="container mt-4">
@@ -57,10 +124,10 @@
       <h1 class="card-title">Citas Médicas</h1>
     </div>
     <div class="card-body">
-      <div id='calendar'></div>
+      <div id="calendar"></div>
     </div>
   </div>
 </div>
 
-<!-- Incluye el modal  -->
+<!-- Incluye el modal -->
 <%- include('../partials/modalCitas.ejs') %>
