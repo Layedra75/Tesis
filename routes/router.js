@@ -14,6 +14,10 @@ router.get('/register', authController.isAuthenticated, vistaRegistro )
 router.get('/usuarios', authController.isAuthenticated, vistaUsuarios)
 router.get('/registerPatient', authController.isAuthenticated, registerPatient)
 
+//router obtener citas en el calendario
+router.get('/obtener-citas', citasController.obtenerCitasMedicas);
+
+//Vista de citas
 router.get('/citas', authController.isAuthenticated, citasMedicas)
 
 //router para login
@@ -22,8 +26,8 @@ router.get('/login', (req, res) => {
     res.render('authentication/login', { alert, layout: false });
 });
 
-// Ruta para guardar una nueva cita médica
-router.post('/guardar-cita', citasController.guardarCita);
+// Ruta para crear una nueva cita médica
+router.post('/guardar-cita', citasController.crearCitaMedica);
 
 //router para eliminar usuario (Trabajador)
 router.get('/eliminar-usuario/:id', usuarioController.eliminarUsuario);
