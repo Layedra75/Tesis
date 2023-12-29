@@ -26,6 +26,7 @@ exports.register = async (req, res) => {
                     alertMessage: "El correo electrónico ya está registrado",
                     alertIcon: 'error',
                     showConfirmButton: true,
+                    confirmButtonColor: "#5D87FF",
                     timer: false,
                     ruta: 'register'
                 });
@@ -43,6 +44,7 @@ exports.register = async (req, res) => {
                             alertIcon: 'error',
                             showConfirmButton: true,
                             timer: false,
+                            confirmButtonColor: "#5D87FF",
                             ruta: 'register'
                         });
                     } else {
@@ -86,6 +88,7 @@ exports.register = async (req, res) => {
                  alertMessage: "Ingrese un usuario y password",
                  alertIcon:'info',
                  showConfirmButton: true,
+                 confirmButtonColor: "#5D87FF",
                  timer: false,
                  ruta: 'login',
                  layout: false
@@ -100,6 +103,7 @@ exports.register = async (req, res) => {
                          alertIcon:'error',
                          showConfirmButton: true,
                          timer: false,
+                         confirmButtonColor: "#5D87FF",
                          ruta: 'login',
                          layout: false    
                      })
